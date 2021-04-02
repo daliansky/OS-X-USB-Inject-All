@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		849921901600F4FC00CCDF3B /* USBInjectAll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8499218E1600F4FC00CCDF3B /* USBInjectAll.cpp */; };
 		849921911600F4FC00CCDF3B /* USBInjectAll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8499218F1600F4FC00CCDF3B /* USBInjectAll.h */; };
+		AA3842922616EDA7006705B9 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3842912616EDA7006705B9 /* libkmod.a */; };
 		EDF7E2D9218A289A00A059C3 /* strstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84B173A51BD6BEF200FF8553 /* strstr.cpp */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		84C4CE431BD5EC37003BC8FE /* USBInjectAll_model_template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = USBInjectAll_model_template.plist; sourceTree = "<group>"; };
 		84C4CE441BD5EC37003BC8FE /* USBInjectAll_template-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "USBInjectAll_template-Info.plist"; sourceTree = "<group>"; };
 		84CACFB11BD6D37E00B41FBF /* SSDT-UIAC.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-UIAC.dsl"; sourceTree = "<group>"; };
+		AA3842912616EDA7006705B9 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
 		ED0AD3E11BD725DC00B36B4B /* config_patches.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config_patches.plist; sourceTree = "<group>"; };
 		ED36B7881BD74CBA0020DE23 /* SSDT-XOSI.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-XOSI.dsl"; sourceTree = "<group>"; };
 		ED5E980621939BE8006D6218 /* USBInjectAll_model_template_EHCI.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = USBInjectAll_model_template_EHCI.plist; sourceTree = "<group>"; };
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3842922616EDA7006705B9 /* libkmod.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +76,7 @@
 		0C4B238014598AD20080D960 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA3842912616EDA7006705B9 /* libkmod.a */,
 				0C4B238114598AD20080D960 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -173,6 +177,7 @@
 				0C4B237A14598AD20080D960 /* Headers */,
 				0C4B237B14598AD20080D960 /* Resources */,
 				0C4B237C14598AD20080D960 /* Rez */,
+				AA3842962616F0E7006705B9 /* Archive */,
 			);
 			buildRules = (
 			);
@@ -235,6 +240,27 @@
 		};
 /* End PBXRezBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		AA3842962616F0E7006705B9 /* Archive */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Archive;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${PRODUCT_NAME}-${MODULE_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry -FS \"${archive}\" \"${dist[@]}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0C4B237814598AD20080D960 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -252,7 +278,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = x86_64;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -267,6 +294,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LLVM_LTO = NO;
 				"LLVM_LTO[arch=x86_64]" = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -275,7 +304,7 @@
 				"OTHER_LDFLAGS[arch=x86_64]" = "-dead_strip";
 				SDKROOT = macosx;
 				STRIP_STYLE = "non-global";
-				SYMROOT = build/Products;
+				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
 		};
@@ -283,7 +312,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = x86_64;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -293,6 +323,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LLVM_LTO = NO;
 				"LLVM_LTO[arch=x86_64]" = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -301,7 +333,7 @@
 				"OTHER_LDFLAGS[arch=x86_64]" = "-dead_strip";
 				SDKROOT = macosx;
 				STRIP_STYLE = "non-global";
-				SYMROOT = build/Products;
+				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
 		};
@@ -312,6 +344,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "USBInjectAll/USBInjectAll-Prefix.pch";
 				INFOPLIST_FILE = "USBInjectAll/USBInjectAll-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
+				);
 				MODULE_NAME = com.rehabman.driver.USBInjectAll;
 				PRODUCT_NAME = USBInjectAll;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -325,6 +361,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "USBInjectAll/USBInjectAll-Prefix.pch";
 				INFOPLIST_FILE = "USBInjectAll/USBInjectAll-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MacKernelSDK/Library/x86_64",
+				);
 				MODULE_NAME = com.rehabman.driver.USBInjectAll;
 				PRODUCT_NAME = USBInjectAll;
 				STRIP_INSTALLED_PRODUCT = YES;
