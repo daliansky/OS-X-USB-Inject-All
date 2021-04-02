@@ -168,3 +168,9 @@ X99-series chipset XHC controller, 8086:8d31
 200-series chipset XHC controller, 8086:a2af (depends on macOS version)
 300-series chipset XHC controller, 8086:a36d or 8086:9ded
 
+
+### Credits
+
+- [Steve Zheng](https://github.com/stevezhengshiqi) for adding MacKernelSDK and Github Actions
+
+- [RehabMan](https://github.com/RehabMan) for writing the software
