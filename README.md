@@ -1,4 +1,7 @@
-## USBInjectAll.kext
+USBInjectAll.kext
+====
+
+[![Build Status](https://github.com/Sniki/OS-X-USB-Inject-All/workflows/CI/badge.svg?branch=master)](https://github.com/Sniki/OS-X-USB-Inject-All/actions)
 
 In 10.11+ Apple has changed significantly the way the USB drivers work.  In the absense of a port injector, the drivers use ACPI to obtain information about which ports are active.  Often, this information is wrong.  Instead of correcting the DSDT, a port injector can be used (just as Apple did for their own computers).  But in order to create such an injector, you must first determine which ports are actually being used. And to do that you need to inject all ports so you can test all ports on the computer to determine which ones correspond to each available port address.  You can't test a port that is disabled...
 
