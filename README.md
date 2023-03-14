@@ -1,7 +1,4 @@
-USBInjectAll.kext
-====
-
-[![Build Status](https://github.com/Sniki/OS-X-USB-Inject-All/workflows/CI/badge.svg?branch=master)](https://github.com/Sniki/OS-X-USB-Inject-All/actions)
+## USBInjectAll.kext
 
 In 10.11+ Apple has changed significantly the way the USB drivers work.  In the absense of a port injector, the drivers use ACPI to obtain information about which ports are active.  Often, this information is wrong.  Instead of correcting the DSDT, a port injector can be used (just as Apple did for their own computers).  But in order to create such an injector, you must first determine which ports are actually being used. And to do that you need to inject all ports so you can test all ports on the computer to determine which ones correspond to each available port address.  You can't test a port that is disabled...
 
@@ -29,7 +26,25 @@ XHC, 100-series chipset (8086:a12f): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01
 
 XHC, 100-series chipset (8086:9d2f): 10-USB2 ports HS01-HS10, 6-USB3 ports SS01-SS06, plus USR1/USR2)
 
-XHC, 200-series/300-series chipset, etc.
+XHC, 200-series chipset(8086:a2af): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 300-series chipset(8086:a36d): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 400-series chipset(8086:a3af): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 400-series chipset(8086:06ed): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 500-series chipset(8086:43ed): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 600-series chipset(8086:7ae0): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+XHC, 700-series chipset(8086:7a60): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
+Comet Lake PCH-LP USB 3.1 xHCI Host Controller, (8086:02ed): 10-USB2 ports HS01-HS10, 4-USB3 ports SS01-SS04, plus USR1/USR2)
+
+Ice Lake-LP USB 3.1 xHCI Host Controller, (8086:34ed): 12-USB2 ports HS01-HS12, 4-USB3 ports SS01-SS04, plus USR1/USR2)
+
+
 
 This kext is only for 10.11+.  It has no use with prior versions.
 
@@ -130,8 +145,7 @@ Downloads are available on the "Release" tab
 
 The best way to download the config_patches.plist and other repo files is to download the project ZIP:
 
-https://github.com/Sniki/OS-X-USB-Inject-All/archive/master.zip
-
+https://github.com/DalianSky/OS-X-USB-Inject-All/archive/master.zip
 
 ### How to Install
 
@@ -162,15 +176,13 @@ Certain Intel xHCI controllers are not supported natively and require an injecto
 
 Because XHCI-unsupported.kext uses a lower IOProbeScore than the native Info.plist, there is no harm in installing it even if native support exists.
 
-Typical xHCI needing XHCI-unsupported.kext:
+Typical xHCI needing `XHCI-unsupported.kext`:
 
-X99-series chipset XHC controller, 8086:8d31
-200-series chipset XHC controller, 8086:a2af (depends on macOS version)
-300-series chipset XHC controller, 8086:a36d or 8086:9ded
+- X99-series chipset XHC controller, 8086:8d31
+- 200-series chipset XHC controller, 8086:a2af (depends on macOS version)
+- 300-series chipset XHC controller, 8086:a36d or 8086:9ded
+- 400-series chipset XHC controller, 8086:a3af
+- 500-series chipset XHC controller, 8086:43ed or 8086:a0ed
+- 600-series chipset XHC controller, 8086:7ae0 or 51ed:8086
+- 700-series chipset XHC controller, 8086:7a60
 
-
-### Credits
-
-- [Steve Zheng](https://github.com/stevezhengshiqi) for adding MacKernelSDK and Github Actions
-
-- [RehabMan](https://github.com/RehabMan) for writing the software
