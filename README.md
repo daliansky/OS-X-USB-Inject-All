@@ -40,6 +40,8 @@ XHC, 600-series chipset(8086:7ae0): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-
 
 XHC, 700-series chipset(8086:7a60): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
 
+XHC, 800-series chipset(8086:7exx): 14-USB2 ports HS01-HS14, 10-USB3 ports SS01-SS10, plus USR1/USR2)
+
 Comet Lake PCH-LP USB 3.1 xHCI Host Controller, (8086:02ed): 10-USB2 ports HS01-HS10, 4-USB3 ports SS01-SS04, plus USR1/USR2)
 
 Ice Lake-LP USB 3.1 xHCI Host Controller, (8086:34ed): 12-USB2 ports HS01-HS12, 4-USB3 ports SS01-SS04, plus USR1/USR2)
@@ -185,4 +187,5 @@ Typical xHCI needing `XHCI-unsupported.kext`:
 - 500-series chipset XHC controller, 8086:43ed or 8086:a0ed
 - 600-series chipset XHC controller, 8086:7ae0 or 51ed:8086
 - 700-series chipset XHC controller, 8086:7a60
+- 800-series chipset XHC controller, 8086:7exx
 
